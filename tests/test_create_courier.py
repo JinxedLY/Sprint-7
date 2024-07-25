@@ -10,6 +10,7 @@ class TestCourierCreateAPI:
     def test_create_new_courier_random_data_success(self):
         payload = RealHumans.create_real_courier()
         courier = CourierMethods.courier_create(payload)
+        del payload["first_name"]
         CourierMethods.courier_delete(payload)
         assert courier.status_code == 201 and APIResponses.Courier_Create_Success in courier.json()
 
@@ -19,6 +20,7 @@ class TestCourierCreateAPI:
         payload = RealHumans.create_real_courier()
         CourierMethods.courier_create(payload)
         courier = CourierMethods.courier_create(payload)
+        del payload["first_name"]
         CourierMethods.courier_delete(payload)
         assert courier.status_code == 409 and courier.json()['message'] == APIResponses.Duplicate_Courier_Error
 
@@ -30,4 +32,3 @@ class TestCourierCreateAPI:
         del payload[missing_field]
         courier = CourierMethods.courier_create(payload)
         assert courier.status_code == 400 and courier.json()['message'] == APIResponses.Insufficient_Data_Error
-

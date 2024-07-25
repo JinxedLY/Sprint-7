@@ -20,3 +20,4 @@ class APIResponses:
     Courier_Create_Success = "ok"
     Duplicate_Courier_Error = "Этот логин уже используется"
     Insufficient_Data_Error = "Недостаточно данных для создания учетной записи"
+    Courier_Login_Success = "id"
