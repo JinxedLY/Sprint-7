@@ -1,6 +1,6 @@
 import allure
 from stuff.methods import OrderMethods
-from stuff.test_data import RealHumans, APIResponses
+from stuff.test_data import APIResponses
 
 
 class TestOrderFetchAPI:
