@@ -13,9 +13,14 @@ class CourierMethods:
     @staticmethod
     @allure.step("Удалить курьера")
     def courier_delete(payload):
-        fetch_id = requests.post(Pathways.courier_login, json=payload)
-        courier_id = fetch_id.json()['id']
-        requests.delete(Pathways.courier_delete + str(courier_id))
+        try:
+            fetch_id = requests.post(Pathways.courier_login, json=payload)
+            fetch_id.raise_for_status()
+            courier_id = fetch_id.json().get('id')
+            if courier_id:
+                requests.delete(f"{Pathways.courier_delete}{courier_id}")
+        except (requests.exceptions.RequestException, KeyError) as e:
+            print(f"Не смог удалить курьера: {e}")
 
     @staticmethod
     @allure.step("Залогиниться под курьером")

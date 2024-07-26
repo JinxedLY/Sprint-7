@@ -25,4 +25,4 @@ class TestCourierCreateAPI:
         payload = RealHumans.create_real_courier()
         del payload[missing_field]
         courier = CourierMethods.courier_create(payload)
-        assert courier.status_code == 400 and courier.json()['message'] == APIResponses.Insufficient_Data_Error
+        assert courier.status_code == 400 and courier.json()['message'] == APIResponses.Data_Courier_Create_Error
