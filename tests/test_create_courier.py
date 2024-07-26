@@ -7,21 +7,15 @@ from stuff.test_data import RealHumans, APIResponses
 class TestCourierCreateAPI:
     @allure.title("Проверка успешного создания курьера с рандомным набором данных")
     @allure.description("Тест создает нового курьера, используя рандомный набор данных, проверяет успешность операции и удаляет курьера пост-фактум")
-    def test_create_new_courier_random_data_success(self):
-        payload = RealHumans.create_real_courier()
-        courier = CourierMethods.courier_create(payload)
-        del payload["first_name"]
-        CourierMethods.courier_delete(payload)
+    def test_create_new_courier_random_data_success(self, courier_make):
+        courier = CourierMethods.courier_create(courier_make)
         assert courier.status_code == 201 and APIResponses.Courier_Create_Success in courier.json()
 
     @allure.title("Проверка невозможности создания второго курьера используя данные существующего курьера")
     @allure.description("Тест создает нового курьера, используя рандомный набор данных. Повторяет этот же запрос с идентичным набором данных, проверяет отсутствие создания курьера на второй запросе и удаляет курьера пост-фактум")
-    def test_create_duplicate_courier_duplicate_data_failure(self):
-        payload = RealHumans.create_real_courier()
-        CourierMethods.courier_create(payload)
-        courier = CourierMethods.courier_create(payload)
-        del payload["first_name"]
-        CourierMethods.courier_delete(payload)
+    def test_create_duplicate_courier_duplicate_data_failure(self, courier_make):
+        CourierMethods.courier_create(courier_make)
+        courier = CourierMethods.courier_create(courier_make)
         assert courier.status_code == 409 and courier.json()['message'] == APIResponses.Duplicate_Courier_Error
 
     @pytest.mark.parametrize("missing_field", ["password", "login", "first_name"])
