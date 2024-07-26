@@ -1,7 +1,8 @@
 import allure
 import pytest
 from stuff.methods import CourierMethods
-from stuff.test_data import FakeHuman, RealHumans, APIResponses
+from stuff.test_data import FakeHuman, APIResponses
+
 
 class TestCourierLoginAPI:
     @allure.title("Проверки возможности логина с валидными данными")
@@ -18,7 +19,8 @@ class TestCourierLoginAPI:
         incomplete_payload = courier_make.copy()
         incomplete_payload.pop(missing_field, None)
         courier_login = CourierMethods.courier_login(incomplete_payload)
-        assert courier_login.status_code == 400 and courier_login.json()['message'] == APIResponses.Data_Courier_Login_Error
+        assert courier_login.status_code == 400 and courier_login.json()[
+            'message'] == APIResponses.Data_Courier_Login_Error
 
     @pytest.mark.parametrize("altered_field", ["password", "login"])
     @allure.title("Проверка невозможности логина при некорректно переданном значении пароля либо логина")
@@ -29,10 +31,12 @@ class TestCourierLoginAPI:
         new_value = existing_value + "12"
         altered_payload[altered_field] = new_value
         courier_login = CourierMethods.courier_login(altered_payload)
-        assert courier_login.status_code == 404 and courier_login.json()['message'] == APIResponses.Data_Courier_Login_Malformed
+        assert courier_login.status_code == 404 and courier_login.json()[
+            'message'] == APIResponses.Data_Courier_Login_Malformed
 
     @allure.title("Проверка невозможности логина при передаче в принципе несуществующей пары данных логин-пароль")
     @allure.description("Передаем юзера, которого нет. Ожидаем фейл")
     def test_courier_login_nonexistant_courier_failure(self):
         courier_login = CourierMethods.courier_login(FakeHuman.payload)
-        assert courier_login.status_code == 404 and courier_login.json()['message'] == APIResponses.Data_Courier_Login_Malformed
+        assert courier_login.status_code == 404 and courier_login.json()[
+            'message'] == APIResponses.Data_Courier_Login_Malformed

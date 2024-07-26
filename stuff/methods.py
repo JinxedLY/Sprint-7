@@ -27,3 +27,10 @@ class CourierMethods:
     def courier_login(payload):
         response = requests.post(Pathways.courier_login, json=payload)
         return response
+
+class OrderMethods:
+    @staticmethod
+    @allure.step("Создать заказ")
+    def order_create(payload):
+        response = requests.post(Pathways.order_create, json=payload)
+        return response

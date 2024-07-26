@@ -6,13 +6,16 @@ from stuff.test_data import RealHumans, APIResponses
 
 class TestCourierCreateAPI:
     @allure.title("Проверка успешного создания курьера с рандомным набором данных")
-    @allure.description("Тест создает нового курьера, используя рандомный набор данных, проверяет успешность операции и удаляет курьера пост-фактум")
+    @allure.description("Тест создает нового курьера, используя рандомный набор данных, проверяет успешность операции "
+                        "и удаляет курьера пост-фактум")
     def test_create_new_courier_random_data_success(self, courier_make):
         courier = CourierMethods.courier_create(courier_make)
         assert courier.status_code == 201 and APIResponses.Courier_Create_Success in courier.json()
 
     @allure.title("Проверка невозможности создания второго курьера используя данные существующего курьера")
-    @allure.description("Тест создает нового курьера, используя рандомный набор данных. Повторяет этот же запрос с идентичным набором данных, проверяет отсутствие создания курьера на второй запросе и удаляет курьера пост-фактум")
+    @allure.description("Тест создает нового курьера, используя рандомный набор данных. Повторяет этот же запрос с "
+                        "идентичным набором данных, проверяет отсутствие создания курьера на второй запросе и удаляет "
+                        "курьера пост-фактум")
     def test_create_duplicate_courier_duplicate_data_failure(self, courier_make):
         CourierMethods.courier_create(courier_make)
         courier = CourierMethods.courier_create(courier_make)
