@@ -1,7 +1,7 @@
 import allure
 import pytest
 from stuff.methods import OrderMethods
-from stuff.test_data import RealHumans, FakeHuman, APIResponses
+from stuff.test_data import RealHumans, APIResponses
 
 
 class TestOrderCreateAPI:

@@ -55,3 +55,4 @@ class APIResponses:
     Data_Courier_Login_Error = "Недостаточно данных для входа"
     Data_Courier_Login_Malformed = "Учетная запись не найдена"
     Order_Create_Success = "track"
+    Order_Fetch = "orders"
